@@ -44,5 +44,4 @@ EXPOSE 753/tcp
 EXPOSE 853/tcp
 EXPOSE 8853/tcp
 
-#ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
-CMD [ "/usr/bin/unbound"]
+ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
