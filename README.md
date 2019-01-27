@@ -1,2 +1,2 @@
  
-echo "# dns-docker" >> README.md
+# dns-docker
