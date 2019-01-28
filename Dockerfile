@@ -21,15 +21,15 @@ RUN echo -e "[archlinuxcn]\nServer = ${MIRROR_CN_URL}" >> /etc/pacman.conf && \
     supervisor \
     dnsmasq
 
+RUN mkdir -p /etc/letsencrypt/live/chih.me/ && \
+    mkdir -p /etc/ssl/certs/
+
 # Config 
 COPY resources/doh-client.conf /etc/dns-over-https/
 COPY resources/doh-server.conf /etc/dns-over-https/
 COPY resources/unbound.conf /etc/unbound/
 COPY resources/dnsmasq.conf /etc/
 COPY resources/nginx.conf /etc/nginx/
-COPY resources/cert/chih.me/privkey.pem /etc/letsencrypt/live/chih.me/
-COPY resources/cert/chih.me/fullchain.pem /etc/letsencrypt/live/chih.me/
-COPY resources/cert/chih.me/dhparams.pem /etc/ssl/certs/
 COPY resources/supervisord.conf /etc/
 # copy directory
 COPY resources/supervisor.d /etc/supervisor.d
