@@ -34,11 +34,9 @@ COPY resources/supervisord.conf /etc/
 # copy directory
 COPY resources/supervisor.d /etc/supervisor.d
 
-EXPOSE 53/udp
 EXPOSE 753/udp
 EXPOSE 753/tcp
 EXPOSE 853/tcp
 EXPOSE 8853/tcp
 
-# ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
-CMD [ "/usr/bin/dnsmasq", "-k", "--user=dnsmasq", "--pid-file" ]
+ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
