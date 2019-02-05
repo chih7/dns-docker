@@ -13,7 +13,6 @@ RUN echo -e "[archlinuxcn]\nServer = ${MIRROR_CN_URL}" >> /etc/pacman.conf && \
     archlinuxcn-keyring && \
     pacman -S --noconfirm --needed --noprogressbar \
     git \
-    unbound \
     dns-over-https-client \
     dns-over-https-server \
     nginx \
@@ -27,7 +26,6 @@ RUN mkdir -p /etc/letsencrypt/live/chih.me/ && \
 # Config 
 COPY resources/doh-client.conf /etc/dns-over-https/
 COPY resources/doh-server.conf /etc/dns-over-https/
-COPY resources/unbound.conf /etc/unbound/
 COPY resources/dnsmasq.conf /etc/
 COPY resources/nginx.conf /etc/nginx/
 COPY resources/supervisord.conf /etc/
@@ -36,7 +34,6 @@ COPY resources/supervisor.d /etc/supervisor.d
 
 EXPOSE 753/udp
 EXPOSE 753/tcp
-EXPOSE 853/tcp
 EXPOSE 8853/tcp
 
 ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
