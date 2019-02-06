@@ -28,6 +28,7 @@ COPY resources/doh-client.conf /etc/dns-over-https/
 COPY resources/doh-server.conf /etc/dns-over-https/
 COPY resources/dnsmasq.conf /etc/
 COPY resources/nginx.conf /etc/nginx/
+COPY resources/tls.conf /etc/nginx/
 COPY resources/supervisord.conf /etc/
 # copy directory
 COPY resources/supervisor.d /etc/supervisor.d
