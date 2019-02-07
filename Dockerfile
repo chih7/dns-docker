@@ -21,7 +21,11 @@ RUN echo -e "[archlinuxcn]\nServer = ${MIRROR_CN_URL}" >> /etc/pacman.conf && \
     dnsmasq
 
 RUN mkdir -p /etc/letsencrypt/live/chih.me/ && \
-    mkdir -p /etc/ssl/certs/
+    mkdir -p /etc/ssl/certs/ && \
+    mkdir -p /etc/hosts.d/
+
+ADD https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts /etc/hosts.d/StevenBlack_hosts
+ADD https://hosts.nfz.moe/basic/hosts /etc/hosts.d/neohosts
 
 # Config 
 COPY resources/doh-client.conf /etc/dns-over-https/
