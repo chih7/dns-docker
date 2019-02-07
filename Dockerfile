@@ -15,7 +15,7 @@ RUN echo -e "[archlinuxcn]\nServer = ${MIRROR_CN_URL}" >> /etc/pacman.conf && \
     git \
     dns-over-https-client \
     dns-over-https-server \
-    nginx \
+    nginx-mainline \
     dnsmasq-china-list-git \
     supervisor \
     dnsmasq
