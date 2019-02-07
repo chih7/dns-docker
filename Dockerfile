@@ -1,14 +1,14 @@
 FROM archlinux/base:latest
 LABEL maintainer="Carson Chih <i@chih.me>"
 
-ARG MIRROR_URL="https://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch"
-ARG MIRROR_CN_URL="https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch"
+ARG MIRROR_CN_URL="https://cdn.repo.archlinuxcn.org/\$arch"
 # add archlinuxcn repository
 RUN echo -e "[archlinuxcn]\nServer = ${MIRROR_CN_URL}" >> /etc/pacman.conf && \
-    echo "Server = ${MIRROR_URL}" > /etc/pacman.d/mirrorlist && \
-    # cat /etc/pacman.conf && \
-    # cat /etc/pacman.d/mirrorlist && \
-    pacman -Syyu --noconfirm --noprogressbar && \
+    pacman -Syy --noconfirm --noprogressbar && \
+    pacman -S --noconfirm --needed --noprogressbar gettext grep && \
+    rm -rf /etc/pacman.d/gnupg && \
+    pacman-key --init && \
+    pacman-key --populate archlinux && \
     pacman -S --noconfirm --needed --noprogressbar \
     archlinuxcn-keyring && \
     pacman -S --noconfirm --needed --noprogressbar \
