@@ -5,7 +5,7 @@ ARG MIRROR_CN_URL="https://cdn.repo.archlinuxcn.org/\$arch"
 # add archlinuxcn repository
 RUN echo -e "[archlinuxcn]\nServer = ${MIRROR_CN_URL}" >> /etc/pacman.conf && \
     pacman -Syy --noconfirm --noprogressbar && \
-    pacman -S --noconfirm --needed --noprogressbar gettext grep && \
+    pacman -S --noconfirm --needed --noprogressbar gettext grep make && \
     rm -rf /etc/pacman.d/gnupg && \
     pacman-key --init && \
     pacman-key --populate archlinux && \
