@@ -18,7 +18,15 @@ RUN echo -e "[archlinuxcn]\nServer = ${MIRROR_CN_URL}" >> /etc/pacman.conf && \
     nginx-mainline \
     dnsmasq-china-list-git \
     supervisor \
-    dnsmasq
+    dnsmasq \
+    unbound
+
+# dnsmasq-china-list
+RUN git clone --depth 1 https://github.com/felixonmars/dnsmasq-china-list.git && \
+    cd ./dnsmasq-china-list && \
+    make unbound && \
+    mkdir -p /etc/unbound/china && \
+    cp *.unbound.conf /etc/unbound/china/
 
 RUN mkdir -p /etc/letsencrypt/live/chih.me/ && \
     mkdir -p /etc/ssl/certs/ && \
@@ -26,11 +34,13 @@ RUN mkdir -p /etc/letsencrypt/live/chih.me/ && \
 
 ADD https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts /etc/hosts.d/StevenBlack_hosts
 ADD https://hosts.nfz.moe/basic/hosts /etc/hosts.d/neohosts
+ADD https://www.internic.net/domain/named.cache /etc/unbound/root.hints
 
 # Config 
 COPY resources/doh-client.conf /etc/dns-over-https/
 COPY resources/doh-server.conf /etc/dns-over-https/
 COPY resources/dnsmasq.conf /etc/
+COPY resources/unbound.conf /etc/unbound/
 COPY resources/nginx.conf /etc/nginx/
 COPY resources/tls.conf /etc/nginx/
 COPY resources/supervisord.conf /etc/
@@ -39,6 +49,7 @@ COPY resources/supervisor.d /etc/supervisor.d
 
 EXPOSE 753/udp
 EXPOSE 753/tcp
+EXPOSE 853/tcp
 EXPOSE 8853/tcp
 
 ENTRYPOINT [ "/usr/bin/supervisord", "-c", "/etc/supervisord.conf" ]
