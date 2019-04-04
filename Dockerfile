@@ -33,7 +33,6 @@ RUN mkdir -p /etc/letsencrypt/live/chih.me/ && \
     mkdir -p /etc/hosts.d/
 
 ADD https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts /etc/hosts.d/StevenBlack_hosts
-ADD https://hosts.nfz.moe/basic/hosts /etc/hosts.d/neohosts
 ADD https://www.internic.net/domain/named.cache /etc/unbound/root.hints
 
 # Config 
