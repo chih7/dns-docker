@@ -13,8 +13,7 @@ RUN echo -e "[archlinuxcn]\nServer = ${MIRROR_CN_URL}" >> /etc/pacman.conf && \
     archlinuxcn-keyring && \
     pacman -S --noconfirm --needed --noprogressbar \
     git \
-    dns-over-https-client \
-    dns-over-https-server \
+    dns-over-https \
     nginx-mainline \
     dnsmasq-china-list-git \
     supervisor \
@@ -24,7 +23,7 @@ RUN echo -e "[archlinuxcn]\nServer = ${MIRROR_CN_URL}" >> /etc/pacman.conf && \
 # dnsmasq-china-list
 RUN git clone --depth 1 https://github.com/felixonmars/dnsmasq-china-list.git && \
     cd ./dnsmasq-china-list && \
-    make SERVER=119.29.29.29 unbound && \
+    make SERVER=223.5.5.5 unbound && \
     mkdir -p /etc/unbound/china && \
     cp *.unbound.conf /etc/unbound/china/
 
@@ -33,6 +32,7 @@ RUN mkdir -p /etc/letsencrypt/live/chih.me/ && \
     mkdir -p /etc/hosts.d/
 
 ADD https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts /etc/hosts.d/StevenBlack_hosts
+ADD https://cdn.jsdelivr.net/gh/neoFelhz/neohosts@gh-pages/basic/hosts /etc/hosts.d/neo_hosts
 ADD https://www.internic.net/domain/named.cache /etc/unbound/root.hints
 
 # Config 
