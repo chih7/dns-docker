@@ -33,15 +33,15 @@ RUN mkdir -p /etc/letsencrypt/live/chih.me/ && \
     mkdir -p /etc/ssl/certs/
 
 ADD https://pgl.yoyo.org/adservers/serverlist.php?hostformat=unbound&showintro=0&startdate%5Bday%5D=&startdate%5Bmonth%5D=&startdate%5Byear%5D=&mimetype=plaintext /etc/unbound/black/black1.unbound.conf
-ADD https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts ~/black_hosts.txt
-RUN grep '^0\.0\.0\.0' ~/black_hosts.txt | awk '{print "local-zone: \""$2"\" always_nxdomain"}' > /etc/unbound/black/black2.unbound.conf
+ADD https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts /tmp/black_hosts.txt
+RUN grep '^0\.0\.0\.0' /tmp/black_hosts.txt | awk '{print "local-zone: \""$2"\" always_nxdomain"}' > /etc/unbound/black/black2.unbound.conf
 
 ADD https://www.internic.net/domain/named.cache /etc/unbound/root.hints
 
 # Config 
 COPY resources/doh-client.conf /etc/dns-over-https/
 COPY resources/doh-server.conf /etc/dns-over-https/
-COPY resources/dnsmasq.conf /etc/
+# COPY resources/dnsmasq.conf /etc/
 COPY resources/unbound.conf /etc/unbound/
 COPY resources/nginx.conf /etc/nginx/
 COPY resources/tls.conf /etc/nginx/
