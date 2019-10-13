@@ -13,6 +13,7 @@ RUN echo -e "[archlinuxcn]\nServer = ${MIRROR_CN_URL}" >> /etc/pacman.conf && \
     archlinuxcn-keyring && \
     pacman -S --noconfirm --needed --noprogressbar \
     git \
+    awk \
     dns-over-https \
     nginx-mainline \
     dnsmasq-china-list-git \
