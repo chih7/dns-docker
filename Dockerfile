@@ -25,14 +25,16 @@ RUN git clone --depth 1 https://github.com/felixonmars/dnsmasq-china-list.git &&
     cd ./dnsmasq-china-list && \
     make SERVER=223.5.5.5 unbound && \
     mkdir -p /etc/unbound/china && \
+    mkdir -p /etc/unbound/black && \
     cp *.unbound.conf /etc/unbound/china/
 
 RUN mkdir -p /etc/letsencrypt/live/chih.me/ && \
-    mkdir -p /etc/ssl/certs/ && \
-    mkdir -p /etc/hosts.d/
+    mkdir -p /etc/ssl/certs/
 
-ADD https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts /etc/hosts.d/StevenBlack_hosts
-ADD https://cdn.jsdelivr.net/gh/neoFelhz/neohosts@gh-pages/basic/hosts /etc/hosts.d/neo_hosts
+ADD https://pgl.yoyo.org/adservers/serverlist.php?hostformat=unbound&showintro=0&startdate%5Bday%5D=&startdate%5Bmonth%5D=&startdate%5Byear%5D=&mimetype=plaintext /etc/unbound/black/black1.unbound.conf
+ADD https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts ~/black_hosts.txt
+RUN grep '^0\.0\.0\.0' ~/black_hosts.txt | awk '{print "local-zone: \""$2"\" always_nxdomain"}' > /etc/unbound/black/black2.unbound.conf
+
 ADD https://www.internic.net/domain/named.cache /etc/unbound/root.hints
 
 # Config 
